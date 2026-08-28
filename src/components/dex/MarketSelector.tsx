@@ -18,10 +18,30 @@ export function MarketSelector({ onClose }: { onClose: () => void }) {
 
   const rows = markets.filter((m) => m.symbol.toLowerCase().includes(query.toLowerCase()));
 
+  const scrollByKey = (el: HTMLElement, key: string) => {
+    if (key === "ArrowDown") { el.scrollTop += 48; return true; }
+    if (key === "ArrowUp") { el.scrollTop -= 48; return true; }
+    if (key === "PageDown") { el.scrollTop += el.clientHeight; return true; }
+    if (key === "PageUp") { el.scrollTop -= el.clientHeight; return true; }
+    return false;
+  };
+
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="fixed left-[10px] top-[128px] z-50 w-[calc(100vw_-_580px)] max-w-[calc(100vw_-_20px)] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_18px_50px_oklch(0.4_0.04_60/0.18)]">
+      <div
+        className="fixed left-[10px] top-[128px] z-50 w-[calc(100vw_-_580px)] max-w-[calc(100vw_-_20px)] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_18px_50px_oklch(0.4_0.04_60/0.18)]"
+        onMouseDown={(e) => {
+          const target = e.target as HTMLElement;
+          if (target.closest("input")) return;
+          listRef.current?.focus();
+        }}
+        onKeyDown={(e) => {
+          const target = e.target as HTMLElement;
+          if (target.closest("input")) return;
+          if (listRef.current && scrollByKey(listRef.current, e.key)) e.preventDefault();
+        }}
+      >
         <div className="p-4">
           <div className="flex items-center gap-3 rounded-xl bg-panel px-4 py-3">
             <Search className="h-[18px] w-[18px] text-muted-foreground" />
@@ -83,13 +103,6 @@ export function MarketSelector({ onClose }: { onClose: () => void }) {
           ref={listRef}
           tabIndex={0}
           className="no-scrollbar max-h-[340px] overflow-y-auto pb-2 outline-none"
-          onKeyDown={(e) => {
-            const el = e.currentTarget;
-            if (e.key === "ArrowDown") { e.preventDefault(); el.scrollTop += 48; }
-            if (e.key === "ArrowUp") { e.preventDefault(); el.scrollTop -= 48; }
-            if (e.key === "PageDown") { e.preventDefault(); el.scrollTop += el.clientHeight; }
-            if (e.key === "PageUp") { e.preventDefault(); el.scrollTop -= el.clientHeight; }
-          }}
         >
           {rows.map((r) => (
             <div
