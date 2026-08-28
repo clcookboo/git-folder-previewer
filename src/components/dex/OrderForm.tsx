@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, PlusCircle, Wallet } from "lucide-react";
+import { ChevronDown, PlusCircle } from "lucide-react";
 import { toast } from "sonner";
+
+import { ConnectButton } from "@/components/ConnectButton";
+
 
 type Mode = "market" | "limit" | "ladder";
 
@@ -238,10 +241,12 @@ export function OrderForm() {
           </>
         )}
 
-        <button className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-[15px] font-semibold text-primary-foreground shadow-[var(--shadow-panel)]">
-          <Wallet className="h-4 w-4 shrink-0" />
-          Connect Wallet
-        </button>
+        <ConnectButton
+          variant="block"
+          showIcon
+          className="mt-3 rounded-2xl py-3 text-[15px] font-semibold shadow-[var(--shadow-panel)]"
+        />
+
 
         <div className="mt-5 rounded-2xl border border-border bg-panel px-3 py-2.5">
           <div className="flex items-center justify-between text-[14px]">

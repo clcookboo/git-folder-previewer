@@ -1,7 +1,8 @@
-import { Bell, ChevronDown, Settings, Wallet } from "lucide-react";
+import { Bell, ChevronDown, Settings } from "lucide-react";
 import { useState } from "react";
 
 import logoMark from "@/assets/logo-mark.png";
+import { ConnectButton } from "@/components/ConnectButton";
 import { NotificationsPanel } from "@/components/dex/NotificationsPanel";
 import { SettingsPanel } from "@/components/dex/SettingsPanel";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -36,10 +37,12 @@ export function TopNav() {
       </nav>
 
       <div className="ml-auto flex items-center gap-3">
-        <button className="inline-flex items-center justify-center gap-2 rounded-full border border-primary bg-primary/25 px-5 py-1.5 text-[14px] font-medium text-foreground transition-colors hover:bg-primary/35">
-          <Wallet className="h-4 w-4 shrink-0" />
-          Connect Wallet
-        </button>
+        <ConnectButton
+          variant="pill"
+          showIcon
+          connectedLabel={undefined}
+          className="border-primary bg-primary/25 px-5 py-1.5 text-[14px] font-medium text-foreground hover:bg-primary/35"
+        />
 
 
         <Popover>

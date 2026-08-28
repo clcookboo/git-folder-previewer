@@ -17,11 +17,13 @@ const DynamicBridge = lazy(async () => {
   const [
     { DynamicContextProvider, useDynamicContext, useEmbeddedReveal, useDynamicModals, useIsLoggedIn, useUserWallets },
     { EthereumWalletConnectors },
+    { SolanaWalletConnectors },
     { dynamicCssOverrides, syncDynamicThemeVars },
     { toast },
   ] = await Promise.all([
     import("@dynamic-labs/sdk-react-core"),
     import("@dynamic-labs/ethereum"),
+    import("@dynamic-labs/solana"),
     import("@/components/wallet/dynamic-theme"),
     import("sonner"),
   ]);
@@ -95,7 +97,7 @@ const DynamicBridge = lazy(async () => {
         theme="light"
         settings={{
           environmentId: DYNAMIC_ENVIRONMENT_ID,
-          walletConnectors: [EthereumWalletConnectors],
+          walletConnectors: [EthereumWalletConnectors, SolanaWalletConnectors],
           initialAuthenticationMode: "connect-and-sign",
           cssOverrides: dynamicCssOverrides,
           events: {
