@@ -97,7 +97,10 @@ const DynamicBridge = lazy(async () => {
         theme="light"
         settings={{
           environmentId: DYNAMIC_ENVIRONMENT_ID,
-          walletConnectors: [EthereumWalletConnectors, SolanaWalletConnectors],
+          walletConnectors: [
+            EthereumWalletConnectors,
+            SolanaWalletConnectors as unknown as typeof EthereumWalletConnectors,
+          ],
           initialAuthenticationMode: "connect-and-sign",
           cssOverrides: dynamicCssOverrides,
           events: {
