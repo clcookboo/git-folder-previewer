@@ -12,4 +12,12 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    build: {
+      // Rolldown can drop the Buffer export used by Solana's safe-buffer
+      // compatibility module during production tree-shaking. The remaining
+      // module then crashes at startup while evaluating `Buffer.from`.
+      rollupOptions: { treeshake: false },
+    },
+  },
 });
