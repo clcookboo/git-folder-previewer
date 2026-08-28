@@ -3,13 +3,16 @@
 // "Cannot read properties of undefined (reading 'from')".
 import { Buffer as BufferPolyfill } from "buffer";
 
-const g = globalThis as typeof globalThis & { Buffer?: typeof BufferPolyfill; global?: unknown };
+export function ensureBufferPolyfill() {
+  const g = globalThis as unknown as {
+    Buffer?: typeof BufferPolyfill;
+    global?: typeof globalThis;
+  };
 
-if (typeof g.Buffer === "undefined") {
-  g.Buffer = BufferPolyfill;
+  if (typeof g.Buffer === "undefined") {
+    g.Buffer = BufferPolyfill;
+  }
+  if (typeof g.global === "undefined") {
+    g.global = globalThis;
+  }
 }
-if (typeof g.global === "undefined") {
-  g.global = globalThis;
-}
-
-export {};

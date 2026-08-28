@@ -3,6 +3,7 @@ import { Suspense, lazy, useEffect, useMemo, type ReactNode } from "react";
 
 import { DYNAMIC_ENVIRONMENT_ID, isWalletConfigured } from "@/lib/wallet";
 import { WalletContext, type WalletState } from "@/hooks/use-wallet";
+import { ensureBufferPolyfill } from "@/lib/buffer-polyfill";
 
 /**
  * Dynamic's SDK is browser-only, so it is dynamically imported after hydration.
@@ -14,6 +15,10 @@ import { WalletContext, type WalletState } from "@/hooks/use-wallet";
  * and only remap its design tokens to our colors via `cssOverrides`.
  */
 const DynamicBridge = lazy(async () => {
+  // This must be an explicit call: package.json marks modules as side-effect-free,
+  // so an import-only polyfill can be removed from production bundles.
+  ensureBufferPolyfill();
+
   const [
     { DynamicContextProvider, useDynamicContext, useEmbeddedReveal, useDynamicModals, useIsLoggedIn, useUserWallets },
     { EthereumWalletConnectors },
