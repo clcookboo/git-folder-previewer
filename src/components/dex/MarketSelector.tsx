@@ -14,6 +14,14 @@ export function MarketSelector({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     listRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const list = listRef.current;
+      if (list && scrollByKey(list, event.key)) event.preventDefault();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const rows = markets.filter((m) => m.symbol.toLowerCase().includes(query.toLowerCase()));
@@ -31,16 +39,7 @@ export function MarketSelector({ onClose }: { onClose: () => void }) {
       <div className="fixed inset-0 z-40" onClick={onClose} />
       <div
         className="fixed left-[10px] top-[128px] z-50 w-[calc(100vw_-_580px)] max-w-[calc(100vw_-_20px)] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_18px_50px_oklch(0.4_0.04_60/0.18)]"
-        onMouseDown={(e) => {
-          const target = e.target as HTMLElement;
-          if (target.closest("input")) return;
-          listRef.current?.focus();
-        }}
-        onKeyDown={(e) => {
-          const target = e.target as HTMLElement;
-          if (target.closest("input")) return;
-          if (listRef.current && scrollByKey(listRef.current, e.key)) e.preventDefault();
-        }}
+        onPointerDown={() => listRef.current?.focus()}
       >
         <div className="p-4">
           <div className="flex items-center gap-3 rounded-xl bg-panel px-4 py-3">
