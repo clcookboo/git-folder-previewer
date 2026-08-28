@@ -103,13 +103,6 @@ export function MarketSelector({ onClose }: { onClose: () => void }) {
           ref={listRef}
           tabIndex={0}
           className="no-scrollbar max-h-[340px] overflow-y-auto pb-2 outline-none"
-          onKeyDown={(e) => {
-            const el = e.currentTarget;
-            if (e.key === "ArrowDown") { e.preventDefault(); el.scrollTop += 48; }
-            if (e.key === "ArrowUp") { e.preventDefault(); el.scrollTop -= 48; }
-            if (e.key === "PageDown") { e.preventDefault(); el.scrollTop += el.clientHeight; }
-            if (e.key === "PageUp") { e.preventDefault(); el.scrollTop -= el.clientHeight; }
-          }}
         >
           {rows.map((r) => (
             <div
