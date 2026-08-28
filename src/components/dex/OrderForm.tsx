@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, PlusCircle, Wallet } from "lucide-react";
+import { ChevronDown, PlusCircle } from "lucide-react";
 import { toast } from "sonner";
+
+import { ConnectButton } from "@/components/ConnectButton";
+
 
 type Mode = "market" | "limit" | "ladder";
 
